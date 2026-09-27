@@ -93,14 +93,20 @@ export default function App() {
   };
 
   const exportCSV = () => {
-    if (!history.length) return;
+    if (!history.length || !selectedProduct) return;
     
-    const headers = ['Product ID', 'Timestamp (UTC)', 'Price', 'Stock', 'Outcome'];
+    // Extract store ID from URL (e.g., https://demo.inelabteamdev.com/item/2104)
+    const urlParts = selectedProduct.product_url.split('/');
+    const storeProductId = urlParts[urlParts.length - 1];
+
+    const headers = ['Store Product ID', 'Product Name', 'Selected Option', 'Timestamp (ISO 8601 UTC)', 'Price', 'Stock', 'Outcome'];
     const csvContent = [
       headers.join(','),
       ...history.map(row => [
-        row.product_id,
-        row.timestamp,
+        storeProductId,
+        `"${selectedProduct.product_name}"`,
+        `"${selectedProduct.selected_option || 'Default'}"`,
+        new Date(row.timestamp).toISOString(),
         row.price || '',
         row.stock ? 'In Stock' : (row.stock === false ? 'Out of Stock' : ''),
         row.outcome
@@ -111,7 +117,7 @@ export default function App() {
     const link = document.createElement('a');
     const url = URL.createObjectURL(blob);
     link.setAttribute('href', url);
-    link.setAttribute('download', `scrape_history_${selectedProduct?.id}.csv`);
+    link.setAttribute('download', `scrape_history_${storeProductId}.csv`);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
