@@ -1,0 +1,107 @@
+{
+  "id": 2541,
+  "slug": "halvard-massager-ultra",
+  "name": "Halvard Massager Ultra",
+  "brand": "Halvard",
+  "category": "Personal Care",
+  "sku": "SK-2541-HA",
+  "description": "The Halvard Massager Ultra. A dependable personal care pick with a clean, no-nonsense design and the everyday features you actually use.",
+  "specs": {
+    "warranty": "5 years limited warranty",
+    "inTheBox": "Massager, Spare head, Cleaning brush, Guide combs",
+    "countryOfOrigin": "Malaysia",
+    "returns": "14-day return, restocking fee applies",
+    "support": "Email only, 48-hour response",
+    "weightGrams": 141,
+    "material": "Ceramic and ABS",
+    "colour": "Slate Grey",
+    "modelYear": 2023
+  },
+  "reviews": [
+    {
+      "id": "2541-r5",
+      "author": "Yusuf G.",
+      "rating": 5,
+      "title": "Solid, boring, reliable",
+      "body": "Bought this after returning two other brands. It does the one job it advertises and does it well. Matches the listing description exactly. Holding up well so far.",
+      "date": "2025-05-25",
+      "verifiedPurchase": true,
+      "helpfulVotes": 204
+    },
+    {
+      "id": "2541-r1",
+      "author": "Yusuf G.",
+      "rating": 5,
+      "title": "Better than expected",
+      "body": "Bought this after returning two other brands. Nothing has rattled loose or started creaking yet. Second Halvard product I own and both have lasted. No regrets.",
+      "date": "2025-04-27",
+      "verifiedPurchase": true,
+      "helpfulVotes": 7
+    },
+    {
+      "id": "2541-r3",
+      "author": "Imran R.",
+      "rating": 5,
+      "title": "Exactly what I wanted",
+      "body": "Replaced a five-year-old unit with this. It does the one job it advertises and does it well. Halvard seem to have got this one right. No regrets.",
+      "date": "2024-12-13",
+      "verifiedPurchase": true,
+      "helpfulVotes": 106
+    },
+    {
+      "id": "2541-r7",
+      "author": "Ananya V.",
+      "rating": 4,
+      "title": "Solid, boring, reliable",
+      "body": "Bought this after returning two other brands. Setup took under ten minutes with no surprises. Packaging was tidy and nothing was missing. Holding up well so far.",
+      "date": "2024-11-14",
+      "verifiedPurchase": false,
+      "helpfulVotes": 227
+    },
+    {
+      "id": "2541-r2",
+      "author": "Manish C.",
+      "rating": 5,
+      "title": "No complaints at all",
+      "body": "Picked it up on a whim and it has earned its place. Nothing has rattled loose or started creaking yet. Packaging was tidy and nothing was missing. Happy to recommend it.",
+      "date": "2024-09-27",
+      "verifiedPurchase": true,
+      "helpfulVotes": 113
+    },
+    {
+      "id": "2541-r4",
+      "author": "Devansh H.",
+      "rating": 3,
+      "title": "Mostly happy",
+      "body": "Mixed feelings after a few weeks of use. Performance is fine, the packaging was a mess. Packaging was fine, the manual less so. Good value, not a standout.",
+      "date": "2024-08-15",
+      "verifiedPurchase": false,
+      "helpfulVotes": 114
+    },
+    {
+      "id": "2541-r6",
+      "author": "Arjun S.",
+      "rating": 5,
+      "title": "Exactly what I wanted",
+      "body": "Picked it up on a whim and it has earned its place. Nothing has rattled loose or started creaking yet. Packaging was tidy and nothing was missing. Would buy the same one again.",
+      "date": "2024-07-14",
+      "verifiedPurchase": true,
+      "helpfulVotes": 139
+    }
+  ],
+  "optionAxis": "Set",
+  "options": [
+    {
+      "id": "o1",
+      "label": "Single"
+    },
+    {
+      "id": "o2",
+      "label": "Duo pack"
+    },
+    {
+      "id": "o3",
+      "label": "Travel set"
+    }
+  ]
+}
