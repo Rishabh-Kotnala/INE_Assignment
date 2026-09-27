@@ -45,6 +45,31 @@ app.post('/api/products', async (req, res) => {
     res.json(data[0]);
 });
 
+// Route: Search proxy to bypass CORS
+let cachedItems = null;
+app.get('/api/search', async (req, res) => {
+    try {
+        const q = (req.query.q || '').toLowerCase();
+        
+        // Cache the items to avoid spamming the mock store
+        if (!cachedItems) {
+            let allItems = [];
+            // Fetch first 5 pages to have a good pool of products
+            for(let i=1; i<=5; i++) {
+                const response = await fetch(`https://demo.inelabteamdev.com/api/v2/listings?page=${i}&limit=60`);
+                const data = await response.json();
+                if (data.results) allItems = allItems.concat(data.results);
+            }
+            cachedItems = allItems;
+        }
+
+        const matches = cachedItems.filter(item => item.name.toLowerCase().includes(q)).slice(0, 10);
+        res.json(matches);
+    } catch(e) {
+        res.status(500).json({ error: 'Search failed' });
+    }
+});
+
 // Route: Trigger scraping job
 app.post('/api/scrape', async (req, res) => {
     // Respond quickly for cron jobs, run scraping in background

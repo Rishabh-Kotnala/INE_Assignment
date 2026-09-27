@@ -32,6 +32,30 @@ export default function App() {
     setLoading(false);
   };
 
+  // Mock Store Search State
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setSearchResults([]);
+      return;
+    }
+    
+    // Use backend proxy to bypass CORS on mock store
+    const backendUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+    
+    const delayDebounceFn = setTimeout(() => {
+      fetch(`${backendUrl}/api/search?q=${encodeURIComponent(searchQuery)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (Array.isArray(data)) setSearchResults(data);
+        }).catch(console.error);
+    }, 300); // 300ms debounce
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [searchQuery]);
+
   const handleSelectProduct = async (product) => {
     setSelectedProduct(product);
     const { data, error } = await supabase
@@ -49,24 +73,20 @@ export default function App() {
     }
   };
 
-  const handleAddProduct = async (e) => {
-    e.preventDefault();
-    if (!searchUrl) return;
+  const handleAddFromSearch = async (item) => {
     setAdding(true);
+    setSearchQuery('');
+    setSearchResults([]);
     
-    // Parse URL for ID or Slug (simplified for demo)
-    const urlParts = searchUrl.split('/');
-    const slugOrId = urlParts[urlParts.length - 1];
-    const name = `Tracked Item ${slugOrId}`;
+    const url = `https://demo.inelabteamdev.com/item/${item.id}`;
     
     const { data, error } = await supabase.from('Products').insert([{
-      product_name: name,
+      product_name: item.name,
       selected_option: 'Default',
-      product_url: searchUrl
+      product_url: url
     }]).select();
 
     if (!error && data) {
-      setSearchUrl('');
       fetchProducts();
     }
     setAdding(false);
@@ -107,18 +127,37 @@ export default function App() {
 
       <div className="main-grid">
         <aside className="sidebar">
-          <form onSubmit={handleAddProduct} className="add-form">
+          <div className="search-container" style={{position: 'relative', marginBottom: '24px'}}>
             <input 
-              type="url" 
-              placeholder="Paste product URL..." 
-              value={searchUrl}
-              onChange={(e) => setSearchUrl(e.target.value)}
-              required
+              type="text" 
+              placeholder="Search mock store (e.g. Halvard)..." 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{width: '100%', padding: '12px 16px', borderRadius: '8px', border: '1px solid #cbd5e1'}}
             />
-            <button type="submit" disabled={adding}>
-              {adding ? <RefreshCw className="spin" size={18} /> : <Plus size={18} />}
-            </button>
-          </form>
+            {searchResults.length > 0 && (
+              <ul className="search-results" style={{
+                position: 'absolute', top: '100%', left: 0, right: 0, 
+                background: 'white', border: '1px solid #cbd5e1', 
+                borderRadius: '8px', marginTop: '4px', padding: '0', 
+                listStyle: 'none', maxHeight: '200px', overflowY: 'auto', zIndex: 50,
+                boxShadow: '0 4px 6px rgba(0,0,0,0.1)'
+              }}>
+                {searchResults.map(item => (
+                  <li 
+                    key={item.id} 
+                    onClick={() => handleAddFromSearch(item)}
+                    style={{padding: '10px 16px', borderBottom: '1px solid #f1f5f9', cursor: 'pointer', fontSize: '14px'}}
+                    onMouseOver={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+                    onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'white'}
+                  >
+                    <strong>{item.name}</strong> <span style={{fontSize:'12px', color:'#64748b'}}>({item.category})</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {adding && <p style={{fontSize: '12px', color: '#3b82f6', marginTop: '8px'}}>Adding...</p>}
+          </div>
 
           <div className="product-list">
             <h3>Tracked Products</h3>
