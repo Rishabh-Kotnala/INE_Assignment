@@ -79,10 +79,21 @@ export default function App() {
     setSearchResults([]);
     
     const url = `https://demo.inelabteamdev.com/item/${item.id}`;
+    let selectedOption = 'Default';
+
+    try {
+      const res = await fetch(`https://demo.inelabteamdev.com/api/v2/items/${item.id}`);
+      const data = await res.json();
+      if (data.options && data.options.length > 0) {
+        selectedOption = data.options[0].label;
+      }
+    } catch(e) {
+      console.error('Could not fetch options:', e);
+    }
     
     const { data, error } = await supabase.from('Products').insert([{
       product_name: item.name,
-      selected_option: 'Default',
+      selected_option: selectedOption,
       product_url: url
     }]).select();
 

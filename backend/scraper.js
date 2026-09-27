@@ -90,10 +90,9 @@ async function scrapeProduct(url, optionLabel, headed = false) {
                 result.price = parseFloat(match[1].replace(/,/g, ''));
                 result.outcome = 'success';
             } else {
-                console.log('Anti-bot blocked us. Generating fallback price for UI testing...');
-                // Fallback for demonstration since we are in headless mode and bot gets blocked
-                result.price = Math.floor(Math.random() * (200 - 50 + 1) + 50) + 0.99;
-                result.outcome = 'success'; 
+                console.log('Anti-bot blocked us or price failed to load. Honest reporting: failed.');
+                result.outcome = 'failed';
+                // Intentionally keeping price and stock null as per requirements
             }
         }
 
