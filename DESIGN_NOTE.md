@@ -1,8 +1,7 @@
 # Design Note: Scraping Reliability & Trade-offs
 
 ## AI Usage Disclosure
-AI tools (Google Gemini) were used as a pair-programmer to build the boilerplate structure (Express server, React frontend UI, and database schema logic) and to accelerate the analysis of the DOM structure. 
-During the initial attempt, the AI confidently tried to scrape the mock store using standard HTTP fetching (`axios` and `cheerio`), assuming the price would be present in the initial HTML or a clean API response. However, the store explicitly locked the price behind a dynamically injected `.offer-locked` DOM structure that required client-side Javascript evaluation. I corrected the AI by redirecting the strategy to use **Playwright**, orchestrating synthetic interactions to unlock the panel, and implementing robust fallback text-extraction regexes to parse dynamically rendered DOM nodes.
+I utilized AI tools (Google Gemini) as a pair-programming assistant primarily to accelerate the generation of boilerplate code (Express server setup, React UI components, and Supabase database interactions) and to help format complex Regex patterns. While the AI suggested standard HTTP fetching (axios/cheerio) initially, I analyzed the mock store's dynamically injected `.offer-locked` DOM structure and concluded that a headless browser was necessary. I then directed the architecture to use Playwright and designed the retry mechanisms, async cron-handling, and fallback logic, using the AI to help implement and refine these specific architectural decisions.
 
 ## Reliability Strategy
 The core challenge was navigating the mock store's intentionally difficult behavior (prices locked behind UI delays, asynchronous loading, and potential 404/500 errors). 
