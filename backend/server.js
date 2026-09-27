@@ -71,7 +71,7 @@ app.get('/api/search', async (req, res) => {
 });
 
 // Route: Trigger scraping job
-app.post('/api/scrape', async (req, res) => {
+app.all('/api/scrape', async (req, res) => {
     // Respond quickly for cron jobs, run scraping in background
     res.json({ message: 'Scraping job started' });
     runScrapeJob().catch(console.error);
